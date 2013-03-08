@@ -1,0 +1,67 @@
+body {
+  color: #666;
+}
+#main {
+  padding: 20px 20px 0 80px;
+  width: 700px;
+}
+h1 {
+  margin-bottom: 2px;
+  font-size: 64px;
+  line-height: 64px;
+  font-family: 'Titillium Web', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  letter-spacing: 3px;
+}
+#subhed {
+  font-size: 14px;
+  font-weight: normal;
+  line-height: 14px;
+  margin: 2px 0 0 0;
+}
+code {
+  border: 0;
+  padding: 6px 18px;
+}
+.code_block {
+  margin-bottom: 10px;
+}
+li {
+  margin-bottom: 20px;
+}
+ul, ol {
+  margin-bottom: 40px;
+}
+footer {
+  margin-top: 30px;
+  padding: 6px 0;
+  background: #fe3627;
+  color: #fff;
+}
+header {
+  background: #fe3627;
+  color: #fff;
+  margin-top: 80px;
+}
+#hed_container {
+  padding: 0 0 15px 80px;
+}
+#foot_container {
+  padding-left: 80px;
+}
+#foot_container a {
+  color: #ddd;
+}
+h4 {
+  margin-bottom: 25px;
+  margin-top: 40px;
+}
+.content, .society {
+  margin-bottom: 20px;
+}
+.society {
+  text-align: right;
+  margin-bottom: 10px;
+}
+.twitter-share-button {
+  vertical-align: sub;
+}

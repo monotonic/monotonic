@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# website: http://ogp.me/ns/website#">
+  <title>Global Unique Identifiers | monotonic</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Bootstrap -->
+  <link href='http://fonts.googleapis.com/css?family=Titillium+Web:200' rel='stylesheet' type='text/css'>
+  <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+  <link href="css/monotonic.css" rel="stylesheet" media="screen">
+  <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-39089339-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+  <meta property="fb:admins" content="650055756">
+  <meta property="og:title" content="monotonic">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="http://www.monotonic.io/">
+  <meta property="og:image" content="http://www.monotonic.io/img/monotonic.png">
+  <meta property="og:description" content="For when you want autoincrement but not MySQL">
+</head>
+
+<body>
+<header>
+<div id="hed_container">
+<h1>monotonic</h1>
+<h2 id="subhed">For when you want autoincrement but not MySQL</h2>
+</div>
+</header>
+
+<div id="main">
+
+<div class="society">
+<a href="https://twitter.com/share?url=https%3A%2F%2Fmonotonic.io" target="_blank" class="twitter-share-button" data-lang="en" data-related="getmonotonic:The official account,felix:The guy who wrote this" data-count="none">Tweet</a>
+<div class="fb-like" data-href="https://monotonic.io/" data-send="true" data-layout="button_count" data-width="450" data-show-faces="false" data-font="arial"></div>
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=264185090279777";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+</div>
+
+<div class="content">
+Stop putting UUIDs and Mongo IDs all over your urls. Monotonic is a simple service that promises to give you strictly monotonically increasing sequences. Every request for IDs is guaranteed to give you IDs bigger than the ones you got before. It's just like MySQL autoincrement columns or actually a bit more like Oracle sequences. Even if you're using MySQL with monotonic you can create an ID scheme that spans tables.
+</div>
+
+<h4>Get your sequence in 2 steps!</h4>
+
+<ol>
+  <li>
+    <p>To start, get your account (but use <i>your</i> email, please):</p>
+
+    <div class="code_block"><code>curl -XPUT -d'password=testing' https://api.monotonic.io/a/felix@monotonic.io</code></div>
+
+    <p>You ought to get back a success:</p>
+
+    <div class="code_block"><code>{"success":true}</code></div>
+  </li>
+
+  <li>
+    <p>Then get your sequence, if it's new we'll create it and start it from 1:</p>
+
+    <div class="code_block"><code>curl -XPOST -d'auth=testing' https://api.monotonic.io/a/felix@monotonic.io/myFirstSequence</code></div>
+
+    <p>You'll get back the range of IDs you requested, 1 by default:</p>
+
+    <div class="code_block"><code>{"success":true,"result":[1,1]}</code></div>
+  </li>
+</ol>
+
+<h4>Looking for more?</h4>
+
+<p>Well, there's not much more... but here's a couple thoughts:</p>
+
+<ul>
+
+  <li>
+    <p>If you want to get more than one ID at a time, just ask:</p>
+
+    <div class="code_block"><code>curl -XPOST -d'auth=testing' https://api.monotonic.io/a/felix@monotonic.io/myFirstSequence?get=10</code></div>
+
+    <p>You'll get back the range of IDs you requested:</p>
+
+    <div class="code_block"><code>{"success":true,"result":[2,11]}</code></div>
+  </li>
+
+  <li>
+    <p>If you're looking for something more <a href="https://github.com/twitter/snowflake" target="_blank">snowflake</a>-esque, dynamically name your sequence the date or milliseconds since epoch, you'll get IDs that reset every time the sequence name changes - because we autovivify your sequence at first request, you never have to worry about the existence of a sequence before requesting numbers.</p>
+
+    <p>You won't need a machine id since this sequence is across all machines, but you're not getting 10s of thousands of IDs per second. You can grab several IDs in a single request and cache them locally and get more when you run out, that'll save you some latency... but really if you need that kind of performance what are you looking here for? Just run a snowflake server.</p>
+  </li>
+</ul>
+
+<h4>Run it yourself!</h4>
+
+<p>Monotonic is a <a href="http://clojure.org/" target="_blank">Clojure</a> app and you can grab it on <a href="https://github.com/felix-ordrin/monotonic" target="_blank">github</a>. You'll also need Redis to get going.</p>
+
+<h4>That's it?</h4>
+
+<p>Yup, that's it.</p>
+
+<h4>But I could build that myself!</h4>
+
+<p>You sure could.</p>
+
+</div><!-- /main -->
+<footer class="footer">
+<div id="foot_container">
+A project by <a href="https://twitter.com/felix">felix</a>. It looks reasonable thanks to <a href="http://www.sugarlowdown.com/">maria</a> and <a href="http://twitter.github.com/bootstrap/">bootstrap</a>.
+</div>
+</footer>
+</body>
+</html>
