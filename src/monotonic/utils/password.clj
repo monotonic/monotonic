@@ -2,34 +2,36 @@
   (:import [java.security MessageDigest])
   (:require [clojure.data.json :as json]))
 
-(defn getRandMult [max]
+(defn get-rand-mult [max]
   (fn ([i] (int (+ 1 (* i max))))))
 
-(defn getRands [max howmany]
-  (let [ randMult (getRandMult max)
-         randSeq  (repeatedly rand) ] 
-    (map randMult (take howmany randSeq))))
+(defn get-rands [max howmany]
+  (let [rand-mult (get-rand-mult max)
+        rand-seq (repeatedly rand)] 
+    (map rand-mult (take howmany rand-seq))))
 
-(def saltSet [ 0 1 2 3 4 5 6 7 8 9 "A" "B" "C" "D" "E" "F" "G" "H" "I" "J" "K" "L" "M" "N" "O" "P" "Q" "R" "S" "T" "U" "V" "W" "X" "Y" "Z" ])
+(def salt-set "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ")
 
-(defn realGetSalt [howmany]
-  (let [ saltseq (map (fn ([i] (nth saltSet i))) (getRands (count saltSet) howmany)) ]
+(defn real-get-salt [howmany]
+  (let [saltseq (map (fn ([i] (nth salt-set i))) (get-rands (count salt-set) howmany))]
     (apply str saltseq)))
 
-(defn getSalt
-  ([] (realGetSalt 8))
-  ([i] (realGetSalt i)))
+(defn get-salt
+  ([] (get-salt 8))
+  ([howmany]
+    (let [salt-set-len (dec (count salt-set)) 
+          pluck-salt (fn ([i] (nth salt-set i)))
+          saltseq (map pluck-salt (get-rands salt-set-len howmany))]
+      (apply str saltseq))))
 
-(defn hashPw [password salt]
-  (let [
-         hash_src (str salt password)    
-         hash     (MessageDigest/getInstance "SHA-256")
-       ]
-     (. hash update (.getBytes hash_src))
-     (let [ digest (.digest hash) ]
+(defn hash-pw [password salt]
+  (let [hash-src (str salt password)    
+        hash (MessageDigest/getInstance "SHA-256")]
+     (.update hash (.getBytes hash-src))
+     (let [digest (.digest hash)]
         (apply str (map #(format "%02x" (bit-and % 0xff)) digest)))))
 
-(defn validAuth [account password]
-  (if (= (account "pw") (hashPw password (account "salt")))
+(defn valid-auth? [account password]
+  (if (= (account "pw") (hash-pw password (account "salt")))
     account
     false))
