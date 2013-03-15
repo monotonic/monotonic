@@ -85,17 +85,17 @@ Stop putting UUIDs and Mongo IDs all over your urls. Monotonic is a simple servi
 
 <ul>
   <li>
-    <p>If base10 is to weak for you, you can request your seq to be in base8, 16, or 36 with suffix on your sequence:</p>
+    <p>If base 10 is to weak for you, you can request your sequence in base 8, 16 or 36 by adding a suffix to your sequence:</p>
 
     <div class="code_block"><code>curl -XPOST -d'auth=testing' https://api.monotonic.io/a/felix@monotonic.io/myFirstSequence.b36 (or .b16, or .b8)</code></div>
 
-    <p>You'll get back your ids all nice - if you were on id 37:</p>
+    <p>You'll get back your IDs all nice. For example, if you were on ID 37:</p>
 
     <div class="code_block"><code>{"success":true,"result":["1A", "1A"]}</code></div>
 
-    <p>NB if you give it a different base or no base it all - it defaults to base10. Also if you give it a valid .b# extension the return values are strings instead of numbers.</p>
+    <p>NB if you ask for a different base or no base it all the default is base 10. Also if you provide a valid .b# extension the return values are strings instead of numbers.</p>
 
-    <p>N even more B putting on an extension does <i>not</i> change the sequence. so /myFirstSequence and /myFirstSequence.b36 will give you successive number just in a different base.</p>
+    <p>N even more B putting on an extension does <i>not</i> change the sequence. so /myFirstSequence and /myFirstSequence.b36 will give you successive numbers - just in a different base.</p>
   </li>
 
   <li>
