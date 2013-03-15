@@ -1,4 +1,4 @@
-(defproject monotonic "0.0.1"
+(defproject monotonic "0.1.0"
   :description "App to make global sequences"
   :url "http://monotonic.io/"
   :dependencies [
